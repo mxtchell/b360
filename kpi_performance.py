@@ -115,12 +115,17 @@ def kpi_performance(parameters: SkillInput):
     tables, footnotes = env.kpi_performance.get_display_tables(breakouts=env.kpi_parameters["breakouts"])
     param_info = [ParameterDisplayDescription(key=k, value=v) for k, v in env.kpi_performance.paramater_display_infomation.items()]
 
-    # Limit facts to top 5 for LLM insights using first table
+    # Limit facts to top 5 for LLM insights
     first_table = list(tables.values())[0] if tables else df
-    facts_df, facts_limitation_note = env.kpi_performance.limit_facts_to_top_n(
-        df=first_table, 
-        top_n=5
-    )
+    try:
+        facts_df, facts_limitation_note = env.kpi_performance.limit_facts_to_top_n(
+            df=df,
+            top_n=5
+        )
+    except (KeyError, Exception) as e:
+        logger.warning(f"limit_facts_to_top_n failed: {e}, using first_table instead")
+        facts_df = first_table
+        facts_limitation_note = None
 
     insights_dfs = [env.kpi_performance.df_notes, facts_df]
     followups = env.kpi_performance.get_suggestions()
