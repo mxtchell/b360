@@ -112,7 +112,7 @@ def kpi_performance(parameters: SkillInput):
     env.kpi_performance = KPIPerformance.from_env(env=env)
     df = env.kpi_performance.run_from_env()
 
-    tables, footnotes = env.kpi_performance.get_display_tables(drop_rank=env.kpi_performance.include_ranks, breakouts=env.kpi_parameters["breakouts"])
+    tables, footnotes = env.kpi_performance.get_display_tables(breakouts=env.kpi_parameters["breakouts"])
     param_info = [ParameterDisplayDescription(key=k, value=v) for k, v in env.kpi_performance.paramater_display_infomation.items()]
 
     # Limit facts to top 5 for LLM insights using first table
