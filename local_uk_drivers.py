@@ -1260,11 +1260,11 @@ class FPAVarianceAnalysis:
 @skill(
     name="Local UK FP&A Drivers",
     llm_name="UK Metric Drivers with Price-Volume-Mix Decomposition",
-    description="Analyze UK-specific variance drivers using Price-Volume-Mix decomposition with waterfall charts and dimensional breakouts. Compare actuals vs Budget, Forecast, or Prior Period. Uses UK-only FP&A data.",
-    capabilities="Price-Volume-Mix variance decomposition. Waterfall chart visualization of variance components. Dimensional breakout analysis with horizontal bar charts. Top contributor identification and ranking. Multi-dimensional variance attribution. Comparison vs Budget, Forecast, or Prior Period.",
+    description="Analyze UK-specific variance drivers using Price-Volume-Mix decomposition with waterfall charts and dimensional breakouts. Compare actuals vs Budget, Forecast, or Prior Period. Uses UK-only FP&A data. Supports filtering by brand, category, customer, region, and other dimensions.",
+    capabilities="Price-Volume-Mix variance decomposition. Waterfall chart visualization of variance components. Dimensional breakout analysis with horizontal bar charts. Top contributor identification and ranking. Multi-dimensional variance attribution. Comparison vs Budget, Forecast, or Prior Period. Filter analysis by brand, category, customer, or any dimension.",
     limitations="Requires 'scenario' column in dataset with values: actuals, budget, forecast. Requires 'volume' column for accurate PVM decomposition. Limited to configured metrics and dimensions.",
-    example_questions="What are the revenue drivers for Q3 2024 vs budget? Show me price-volume-mix analysis for sales vs forecast. Which regions contributed most to the revenue variance? Analyze variance drivers by category and customer type. What caused the variance in Q4 vs prior period?",
-    parameter_guidance="Select the metric to analyze (e.g., Revenue, Profit, Units). Choose the time period for analysis (e.g., Q3 2024, 2024, Jan 2024). Choose Budget, Forecast, or Prior Period for comparison. Select dimensions for detailed breakout (e.g., Region, Category, Customer). Specify number of top contributors to display (default 10). Add additional filters as needed (e.g., Region = North, Product = Electronics).",
+    example_questions="What are the revenue drivers for Q3 2024 vs budget? Show me price-volume-mix analysis for Bliss brand vs forecast. Which regions contributed most to the revenue variance for Chocolate category? Analyze variance drivers for Biscuits by customer type. What caused the variance in Q4 vs prior period for brand X?",
+    parameter_guidance="Select the metric to analyze (e.g., Revenue, Profit, Units). Choose the time period for analysis (e.g., Q3 2024, 2024, Jan 2024). Choose Budget, Forecast, or Prior Period for comparison. Select dimensions for detailed breakout (e.g., Region, Category, Customer). Specify number of top contributors to display (default 10). IMPORTANT: Use other_filters to filter by Brand, Category, Customer, Region, or any other dimension (e.g., Brand = Bliss, Category = Chocolate).",
     parameters=[
         SkillParameter(
             name="metric",
@@ -1300,7 +1300,7 @@ class FPAVarianceAnalysis:
             name="other_filters",
             constrained_to="filters",
             is_multi=True,
-            description="Additional filters to apply to the analysis"
+            description="Filters to apply to the analysis (e.g., Brand = Bliss, Category = Chocolate, Customer = Tesco). ALWAYS pass brand/category/customer filters when the user specifies them."
         ),
         SkillParameter(
             name="max_prompt",
