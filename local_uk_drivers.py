@@ -84,6 +84,11 @@ Provide detailed insights covering:
 4. Areas requiring immediate attention
 
 Format the insights in clear markdown with bullet points.
+
+IMPORTANT:
+- Do NOT use markdown tables
+- Do NOT use emojis
+- Keep insights concise: 75-150 words maximum
 """
 
 
